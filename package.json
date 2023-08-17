@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
     "dev": "nodemon --watch src/**/*.ts --exec ts-node src/index.ts",
