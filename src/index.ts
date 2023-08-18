@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
-import { animeRoute, ongoingRoute } from './routes/index.js';
+import { animeRoute, genreRoute, ongoingRoute } from './routes/index.js';
 
 dotenv.config();
 const app = express();
@@ -21,6 +21,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/ongoing-anime', ongoingRoute);
 app.use('/anime', animeRoute);
+app.use('/genres', genreRoute);
 
 app.listen(port, () => {
   console.log(`Server running on ${host}:${port}`);
