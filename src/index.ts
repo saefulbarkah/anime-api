@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
-import ongoingRoute from './routes/ongoing.js';
-dotenv.config();
+import { animeRoute, ongoingRoute } from './routes/index.js';
 
+dotenv.config();
 const app = express();
 const port = process.env.PORT;
 const host = process.env.HOST;
@@ -13,16 +13,15 @@ app.get('/', (req: Request, res: Response) => {
   res.send({
     message: 'OTAKUDESU API',
     routes: {
-      ongoing: '/ongoing',
-      'release schedule': '/release-schedule',
-      genres: '/genres',
-      'complete-anime': '/complete-anime',
+      ongoing: '/ongoing-anime',
+      show_detail_anime: '/anime/:title',
     },
   });
 });
 
 app.use('/ongoing-anime', ongoingRoute);
+app.use('/anime', animeRoute);
 
 app.listen(port, () => {
-  console.log(`Otakudesu API running on ${host}:${port}`);
+  console.log(`Server running on ${host}:${port}`);
 });

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as cheerio from 'cheerio';
 import { BASE_URL } from '../../config/CONST.js';
+import { splitString } from '../../utils/index.util.js';
 
 export const getOngoing = async (req: Request, res: Response) => {
   const { page } = req.query;
@@ -13,7 +14,15 @@ export const getOngoing = async (req: Request, res: Response) => {
   const response = await fetch(url);
   const html = await response.text();
   const $ = cheerio.load(html);
-  const thumb = $('.wp-post-image')
+
+  const animeURL = $('.thumb a')
+    .map((index, element) => {
+      const value = $(element).attr('href');
+      const results = splitString(value, 2);
+      return results;
+    })
+    .get();
+  const thumbnail = $('.wp-post-image')
     .map((index, element) => {
       return $(element).attr('src');
     })
@@ -39,12 +48,13 @@ export const getOngoing = async (req: Request, res: Response) => {
   });
 
   const data = [];
-  for (let i = 0; i < thumb.length; i++) {
+  for (let i = 0; i < thumbnail.length; i++) {
     const item = {
       title: title[i],
-      thumbnail: thumb[i],
+      thumbnail: thumbnail[i],
       releaseSchedule: release[i],
       episode: episode[i],
+      slug: animeURL[i],
     };
     data.push(item);
   }
