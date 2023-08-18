@@ -34,3 +34,7 @@ HOST=http://localhost
 ```
 npm run dev
 ```
+
+## DEMO
+
+URL : https://anime-api.cyclic.cloud/
