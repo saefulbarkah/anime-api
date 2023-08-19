@@ -17,6 +17,7 @@ app.get('/', (req: Request, res: Response) => {
       ongoing: '/ongoing-anime',
       show_detail_anime: '/anime/:title',
       release_schedule: '/release-schedule',
+      genre_list: '/genres',
     },
   });
 });
