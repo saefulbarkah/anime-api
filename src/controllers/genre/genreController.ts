@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as cheerio from 'cheerio';
-import { BASE_URL } from '../../config/CONST.js';
+import { BASE_URL } from '../../config/app.config.js';
 
 export const GenreLists = async (req: Request, res: Response) => {
   try {

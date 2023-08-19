@@ -1,16 +1,12 @@
 import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
 import {
   animeRoute,
   genreRoute,
   ongoingRoute,
   scheduleRoute,
 } from './routes/index.js';
-
-dotenv.config();
-const app = express();
-const port = process.env.PORT;
-const host = process.env.HOST;
+import { host, port } from './config/app.config.js';
+export const app = express();
 
 app.use(express.json());
 

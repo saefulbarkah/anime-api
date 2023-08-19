@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import { BASE_URL } from '../../config/CONST.js';
+import { BASE_URL } from '../../config/app.config.js';
 import * as cheerio from 'cheerio';
 
 export const releaseSchedule = async (req: Request, res: Response) => {

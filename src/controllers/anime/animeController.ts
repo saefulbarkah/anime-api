@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { BASE_URL } from '../../config/CONST.js';
+import { BASE_URL } from '../../config/app.config.js';
 import * as cheerio from 'cheerio';
 import { animeProps } from '../../types/anime.js';
 import { splitString } from '../../utils/index.util.js';
