@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { BASE_URL } from '../../config/app.config.js';
 import * as cheerio from 'cheerio';
 import { animeProps } from '../../types/anime.js';
+import { splitString } from '../../utils/index.util.js';
 
 export const searchAnime = async (req: Request, res: Response) => {
   const { q } = req.query;
@@ -56,7 +57,7 @@ export const searchAnime = async (req: Request, res: Response) => {
             genres,
             status,
             rating: parseFloat(rating),
-            slug: slugURL,
+            slug: splitString(slugURL, 2, '/'),
           };
         })
         .get();
