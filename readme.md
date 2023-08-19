@@ -2,7 +2,7 @@
 
 This API generate data on Otakudesu website with method web scraping.
 
-## Todos
+## Features
 
 - [x] Ongoing anime
 - [x] Show detail anime
