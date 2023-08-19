@@ -37,5 +37,5 @@ npm run dev
 
 ## DEMO
 
-Documentation: https://documenter.getpostman.com/view/23101049/2s9Y5SWkyZ
-API URL : https://anime-api.cyclic.cloud/
+- Documentation: https://documenter.getpostman.com/view/23101049/2s9Y5SWkyZ
+- API URL : https://anime-api.cyclic.cloud/
