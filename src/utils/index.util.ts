@@ -3,9 +3,13 @@ export const slug = (val: string) => {
   return results;
 };
 
-export const splitString = (val: string | undefined, index: number) => {
+export const splitString = (
+  val: string | undefined,
+  index: number,
+  key: string | number
+) => {
   if (!val) return;
-  const splitPart = val.split('/');
+  const splitPart = val.split(`${key}`);
   const lastPart = splitPart[splitPart.length - index];
   return lastPart;
 };

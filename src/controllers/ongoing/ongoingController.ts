@@ -18,7 +18,7 @@ export const getOngoing = async (req: Request, res: Response) => {
   const animeURL = $('.thumb a')
     .map((index, element) => {
       const value = $(element).attr('href');
-      const results = splitString(value, 2);
+      const results = splitString(value, 2, '/');
       return results;
     })
     .get();
