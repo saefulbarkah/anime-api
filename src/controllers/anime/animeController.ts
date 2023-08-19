@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { BASE_URL } from '../../config/CONST.js';
 import * as cheerio from 'cheerio';
 import { animeProps } from '../../types/anime.js';
+import { splitString } from '../../utils/index.util.js';
 
 export const findAnimeByTitle = async (req: Request, res: Response) => {
   const { title } = req.params;
@@ -16,9 +17,20 @@ export const findAnimeByTitle = async (req: Request, res: Response) => {
       })
       .get();
 
+    if (!info.length)
+      return res.json({ status: 404, response: 'anime not found' });
+
     const episodeLists = $('.episodelist ul li span')
       .map((idx, element) => {
         return $(element).text();
+      })
+      .get();
+
+    const episodeSlug = $('.episodelist ul li span a')
+      .map((idx, element) => {
+        const value = $(element).attr('href');
+        const results = splitString(value, 2, '/');
+        return results;
       })
       .get();
 
@@ -66,7 +78,7 @@ export const findAnimeByTitle = async (req: Request, res: Response) => {
     }
 
     const episodesResults = [];
-    let tempEpisodes: { title?: string; date?: string } = {};
+    let tempEpisodes: { title?: string; date?: string; slug?: string } = {};
 
     // get data episode lists
     for (let i = 0; i < episodeLists.length; i++) {
@@ -79,10 +91,15 @@ export const findAnimeByTitle = async (req: Request, res: Response) => {
       }
     }
 
+    // add slug object to episode lists
+    const episodes = episodesResults.map((item, idx) => {
+      return { ...item, slug: episodeSlug[idx] };
+    });
+
     const data: Partial<animeProps> = {
       thumbnail,
       ...renamedDataObject,
-      episodeLists: episodesResults,
+      episodeLists: episodes,
     };
 
     res.status(200).json(data);
