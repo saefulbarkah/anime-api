@@ -6,9 +6,12 @@ import {
   scheduleRoute,
 } from './routes/index.js';
 import { host, port } from './config/app.config.js';
+import cors from 'cors';
+
 export const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req: Request, res: Response) => {
   res.send({
