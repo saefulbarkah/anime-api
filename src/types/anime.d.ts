@@ -1,3 +1,5 @@
+import { scheduleProps } from './schedule.js';
+
 export type episodeListType = {
   title?: string;
   date?: string;

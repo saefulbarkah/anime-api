@@ -1,6 +1,8 @@
 import { Response, Request } from 'express';
 import { BASE_URL } from '../../config/app.config.js';
 import * as cheerio from 'cheerio';
+import { scheduleReleaseProps } from '../../types/schedule.js';
+import { splitString } from '../../utils/index.util.js';
 
 export const releaseSchedule = async (req: Request, res: Response) => {
   try {
@@ -8,30 +10,41 @@ export const releaseSchedule = async (req: Request, res: Response) => {
     const html = await response.text();
     const $ = cheerio.load(html);
 
-    const scheduleDate = $('.kglist321')
-      .map((idx, el) => {
-        return $(el).children('ul').children('li').text();
-      })
-      .get();
-
-    const daysOfWeek = [
-      'Senin',
-      'Selasa',
-      'Rabu',
-      'Kamis',
-      'Jumat',
-      'Sabtu',
-      'Minggu',
+    const dayOfWeek = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
       'Random',
     ];
 
-    const animeList = $('.kglist321 ul li a')
-      .map((idx, el) => {
-        return $(el).text().trim();
-      })
-      .get();
+    const $container = $('.kglist321');
 
-    res.json({ scheduleDate });
+    const dataArray: scheduleReleaseProps = [];
+
+    $container.find('ul').each(function (idx) {
+      const $ul = $(this);
+      const titlesArray = $ul
+        .find('li a')
+        .map(function () {
+          const title = $(this).text().trim();
+          const slug = $(this).attr('href');
+          return { slug, title };
+        })
+        .get();
+
+      dataArray.push({
+        day: dayOfWeek[idx],
+        data: titlesArray.map((itm) => {
+          return { title: itm.title, slug: splitString(itm.slug, 2, '/') };
+        }),
+      });
+    });
+
+    res.json(dataArray);
   } catch (error) {
     res.json(error);
   }
