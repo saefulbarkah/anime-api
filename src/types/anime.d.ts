@@ -17,4 +17,6 @@ export type animeProps = {
   studio: string;
   genres: string[];
   episodeLists: episodeListType[];
+  rating?: number;
+  slug?: string;
 };
