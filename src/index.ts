@@ -18,6 +18,7 @@ app.get('/', (req: Request, res: Response) => {
       genre_list: '/genres',
       complete_anime: '/complete-anime',
       search_anime: '/anime?q=:title',
+      anime_lists: '/anime/lists',
     },
   });
 });

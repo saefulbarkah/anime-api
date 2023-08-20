@@ -4,7 +4,7 @@ import * as cheerio from 'cheerio';
 import { animeProps } from '../../types/anime.js';
 import { splitString } from '../../utils/index.util.js';
 
-export const findAnimeByTitle = async (req: Request, res: Response) => {
+const findAnimeByTitle = async (req: Request, res: Response) => {
   const { title } = req.params;
   try {
     const response = await fetch(BASE_URL + '/anime/' + title);
@@ -18,7 +18,7 @@ export const findAnimeByTitle = async (req: Request, res: Response) => {
       .get();
 
     if (!info.length)
-      return res.json({ status: 404, response: 'anime not found' });
+      return res.status(404).json({ response: 'result not found' });
 
     const episodeLists = $('.episodelist ul li span')
       .map((idx, element) => {
@@ -107,3 +107,46 @@ export const findAnimeByTitle = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+
+const getAnimeLists = async (req: Request, res: Response) => {
+  try {
+    const response = await fetch(BASE_URL + 'anime-list');
+    const html = await response.text();
+    const $ = cheerio.load(html);
+
+    const $container = $('.jdlbar');
+
+    const data: Partial<animeProps>[] = [];
+    $container.find('ul').each((idx, el) => {
+      const ul = $(el);
+      const items = ul
+        .find('li')
+        .map((index, element) => {
+          const title = $(element).find('a').text();
+          const slug = $(element).find('a').attr('href');
+          return { title, slug: splitString(slug, 2, '/') };
+        })
+        .get();
+
+      items.map((item, idx) => {
+        data.push({
+          title: item.title,
+          slug: item.slug,
+        });
+      });
+    });
+
+    if (!data.length) return res.status(404).json('data not found');
+
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(403).json(error);
+  }
+};
+
+const animeController = {
+  findAnimeByTitle,
+  getAnimeLists,
+};
+
+export default animeController;
