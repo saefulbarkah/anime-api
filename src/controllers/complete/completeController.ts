@@ -60,6 +60,9 @@ const getCompleteAnime = async (req: Request, res: Response) => {
       });
     });
 
+    if (!data.length)
+      return res.send({ response: 'Results not found', status: 400 });
+
     const pagination = $('.pagenavix .page-numbers')
       .map((idx, el) => {
         return $(el).text();
@@ -67,13 +70,27 @@ const getCompleteAnime = async (req: Request, res: Response) => {
       .get();
     const paginationCount = pagination.filter((item) => !isNaN(Number(item)));
 
-    if (!data.length)
-      return res.send({ response: 'Results not found', status: 400 });
+    const totalPage = Number(paginationCount[paginationCount.length - 1]);
+
+    const prevPage = () => {
+      if (!page) return null;
+      if (Number(page) >= 2) return Number(page) - 1;
+      return null;
+    };
+
+    const nextPage = () => {
+      if (!page) return 2;
+      if (totalPage < Number(page)) return Number(page) + 1;
+      return null;
+    };
+
+    const currentPage = page ? Number(page) : 1;
 
     const collection = {
-      currentPage: page ? page : 1,
-      totalPage: Number(paginationCount[paginationCount.length - 1]),
-      nextPage: page ? Number(page) + 1 : 2,
+      currentPage,
+      totalPage,
+      nextPage: nextPage(),
+      prevPage: prevPage(),
       data: data,
     };
 
