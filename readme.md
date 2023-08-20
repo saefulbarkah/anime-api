@@ -9,7 +9,8 @@ This API generate data on Otakudesu website with method web scraping.
 - [x] Genre lists
 - [x] Release schedule
 - [x] Search anime
-- [ ] Anime lists
+- [x] Complete anime
+- [] Anime lists
 
 ## Tech stack & Library
 

@@ -13,7 +13,7 @@ export type animeProps = {
   status: string;
   episodes: number;
   duration: string;
-  releaseDate: Date;
+  releaseDate: Date | string;
   studio: string;
   genres: string[];
   episodeLists: episodeListType[];
