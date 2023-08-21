@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "builds": [{ "src": "src/**/*.ts", "use": "ts-node" }],
+  "routes": [{ "src": "/(.*)", "dest": "src/$1" }]
+}
