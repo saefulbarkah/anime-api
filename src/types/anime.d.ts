@@ -3,6 +3,7 @@ import { scheduleProps } from './schedule.js';
 export type episodeListType = {
   title?: string;
   date?: string;
+  slug?: string;
 };
 
 export type animeProps = {

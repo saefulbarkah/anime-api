@@ -5,6 +5,6 @@ const router = express.Router();
 
 // routes
 router.get('/lists', animeController.getAnimeLists);
-router.get('/:title', animeController.findAnimeByTitle);
+router.get('/:slug', animeController.findAnimeByTitle);
 
 export default router;

@@ -5,9 +5,9 @@ import { animeProps } from '../../types/anime.js';
 import { splitString } from '../../utils/index.util.js';
 
 const findAnimeByTitle = async (req: Request, res: Response) => {
-  const { title } = req.params;
+  const { slug } = req.params;
   try {
-    const response = await fetch(BASE_URL + '/anime/' + title);
+    const response = await fetch(BASE_URL + '/anime/' + slug);
     const html = await response.text();
     const $ = cheerio.load(html);
     const thumbnail = $('.wp-post-image').attr('src');
