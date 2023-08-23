@@ -69,9 +69,15 @@ const getEpisodeDetail = async (req: Request, res: Response) => {
       episodelist.push({ name, slug: splitString(url, 2, '/') });
     });
 
+    // get stream links
+    const streamLink = $('.player-embed .responsive-embed-stream iframe').attr(
+      'src'
+    );
+
     const data = {
       title,
       ...dataList,
+      streamLink,
       episodes: episodelist,
       downloadLinks: downloadData,
     };
